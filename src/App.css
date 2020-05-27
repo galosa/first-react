@@ -3,9 +3,17 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
+
+.Animation {
+  animation: App-logo-spin infinite 20s linear;
+}
+
+.Animation-counterwise {
+  animation: App-logo-spin-counter-clockwise infinite 3s linear;
+}
+
 
 .App-header {
   background-color: #222;
@@ -21,4 +29,9 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes App-logo-spin-counter-clockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
 }
