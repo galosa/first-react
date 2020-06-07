@@ -12,10 +12,10 @@ const Board = (props) => {
     >
       {props.board.map((row, i) => (
         <div key={i}>
-          {row.map((col, j) => {
+          {row.map((player, j) => {
             let chosenClass = "";
-            if (col > 0) chosenClass = " blue-dot";
-            else if (col < 0) chosenClass = " green-dot";
+            if (player === 1) chosenClass = " blue-dot";
+            else if (player === -1) chosenClass = " green-dot";
             return (
               <span
                 key={j}

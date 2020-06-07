@@ -52,11 +52,9 @@ class GameBoard extends Component {
       <div
         className="board"
         style={{
-          // width: `${this.props.boardSize * this.props.boardSize * 27}px`,
           display: "grid",
           gridTemplateColumns: `repeat(${this.props.boardSize}, ${3 * 29}px)`,
           justifyItems: "stretch",
-          // width: `fit-content`,
           margin: "auto",
         }}
       >
