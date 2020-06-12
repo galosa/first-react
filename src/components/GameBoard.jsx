@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Board from "./Board";
 import "./GameBoard.css";
+import Checker from "../logic/Checker";
 
 class GameBoard extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class GameBoard extends Component {
     this.state = {
       player: 1,
       boards: boards,
+      winner: 0,
     };
   }
 
@@ -40,6 +42,7 @@ class GameBoard extends Component {
                 this.setState({
                   boards: tmpBoard,
                   player: this.state.player * -1,
+                  winner: Checker(this.state.boards),
                 });
               }
             }}

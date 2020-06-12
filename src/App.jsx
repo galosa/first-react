@@ -35,7 +35,7 @@ class App extends Component {
         </p>
         <div className="PetangoGame">
           <h2>Petango Game</h2>
-          <GameBoard boardSize={3} />
+          <GameBoard boardSize={5} />
         </div>
       </div>
     );
