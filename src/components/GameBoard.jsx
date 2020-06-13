@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Board from "./Board";
 import "./GameBoard.css";
 import Checker from "../logic/Checker";
+import "./Board.css";
 
 class GameBoard extends Component {
   constructor(props) {
@@ -50,8 +51,7 @@ class GameBoard extends Component {
         );
       }
     }
-
-    return (
+    return this.state.winner === 0 ? (
       <div
         className="board"
         style={{
@@ -62,6 +62,21 @@ class GameBoard extends Component {
         }}
       >
         {boardsComponents}
+      </div>
+    ) : (
+      <div>
+        <div>
+          <h3>The winner is:</h3>
+        </div>
+        <div
+          className={
+            "dot" + (this.state.winner > 0 ? " blue-dot" : " green-dot")
+          }
+          style={{
+            height: "90px",
+            width: "90px",
+          }}
+        ></div>
       </div>
     );
   }

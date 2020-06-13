@@ -110,6 +110,7 @@ const winnerChecker = (boards) => {
   if (winner !== 0) {
     console.log(`winner: ${winner}`);
   }
+  return winner;
 };
 
 export default winnerChecker;
