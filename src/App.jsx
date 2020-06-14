@@ -4,12 +4,14 @@ import "./App.css";
 import Button from "./components/Button";
 import "./PetangoGame.css";
 import GameBoard from "./components/GameBoard";
+import ButtonCounter from "./components/ButtonCounter";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       clockwise: true,
+      boardSize: 3,
     };
   }
 
@@ -35,7 +37,21 @@ class App extends Component {
         </p>
         <div className="PetangoGame">
           <h2>Petango Game</h2>
-          <GameBoard boardSize={5} />
+          <div>
+            <ButtonCounter
+              text="+"
+              counterOperation={() =>
+                this.setState({ boardSize: this.state.boardSize + 1 })
+              }
+            />
+            <ButtonCounter
+              text="-"
+              counterOperation={() =>
+                this.setState({ boardSize: this.state.boardSize - 1 })
+              }
+            />
+          </div>
+          <GameBoard boardSize={this.state.boardSize} />
         </div>
       </div>
     );

@@ -8,6 +8,16 @@ class GameBoard extends Component {
   constructor(props) {
     super(props);
     const size = props.boardSize;
+    const boards = this.generateBoards(size);
+    this.state = {
+      boardsSize: size,
+      player: 1,
+      boards: boards,
+      winner: 0,
+    };
+  }
+
+  generateBoards(size) {
     const boards = [];
     for (let i = 0; i < size; i++) {
       boards[i] = [];
@@ -19,22 +29,29 @@ class GameBoard extends Component {
         ];
       }
     }
-    this.state = {
+    return boards;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const size = nextProps.boardSize;
+    const boards = this.generateBoards(size);
+    this.setState({
+      boardsSize: size,
       player: 1,
       boards: boards,
       winner: 0,
-    };
+    });
   }
 
   render() {
     const boardsComponents = [];
-    const { boardSize } = this.props;
-    for (let i = 0; i < boardSize; i++) {
-      for (let j = 0; j < boardSize; j++) {
+    const boardsSize = this.state.boardsSize;
+    for (let i = 0; i < boardsSize; i++) {
+      for (let j = 0; j < boardsSize; j++) {
         boardsComponents.push(
           <Board
             key={`${i},${j}`}
-            boardSize={boardSize}
+            boardSize={boardsSize}
             board={this.state.boards[i][j]}
             handleClick={(event, x, y) => {
               const tmpBoard = this.state.boards;

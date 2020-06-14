@@ -94,17 +94,28 @@ const winnerChecker = (boards) => {
   };
 
   var winner = 0;
-  for (let i = 0; i < boardsSize * boardLength; i++) {
-    for (let j = 0; j < boardsSize * boardLength; j++) {
-      const boardsRow = i % boardsSize;
-      const boardsCol = j % boardsSize;
-      const row = j % boardLength;
-      const col = i % boardLength;
-      const rowWinner = rowWin(boardsRow, boardsCol, row, col);
-      const colWinner = colWin(boardsRow, boardsCol, row, col);
-      const diagWinner = diagWin(boardsRow, boardsCol, row, col);
-      const reverseDiagWinner = reverseDiagWin(boardsRow, boardsCol, row, col);
-      winner += rowWinner + colWinner + diagWinner + reverseDiagWinner;
+  console.log(`boardsSize * boardLength: ${boardsSize * boardLength}`);
+  for (let boardsRow = 0; boardsRow < boardsSize; boardsRow++) {
+    for (let boardsCol = 0; boardsCol < boardsSize; boardsCol++) {
+      for (let row = 0; row < boardLength; row++) {
+        for (let col = 0; col < boardLength; col++) {
+          const rowWinner = rowWin(boardsRow, boardsCol, row, col);
+          if (rowWinner !== 0) console.log(`rowWinner: ${rowWinner}`);
+          const colWinner = colWin(boardsRow, boardsCol, row, col);
+          if (colWinner !== 0) console.log(`colWinner: ${colWinner}`);
+          const diagWinner = diagWin(boardsRow, boardsCol, row, col);
+          if (diagWinner !== 0) console.log(`diagWinner: ${diagWinner}`);
+          const reverseDiagWinner = reverseDiagWin(
+            boardsRow,
+            boardsCol,
+            row,
+            col
+          );
+          if (reverseDiagWinner !== 0)
+            console.log(`reverseDiagWinner: ${reverseDiagWinner}`);
+          winner += rowWinner + colWinner + diagWinner + reverseDiagWinner;
+        }
+      }
     }
   }
   if (winner !== 0) {
