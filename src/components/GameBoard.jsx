@@ -3,6 +3,10 @@ import Board from "./Board";
 import "./GameBoard.css";
 import Checker from "../logic/Checker";
 import "./Board.css";
+import {
+  rotateBoardClockwise,
+  rotateBoardAntiClockwise,
+} from "../logic/Rotate";
 
 class GameBoard extends Component {
   constructor(props) {
@@ -40,6 +44,7 @@ class GameBoard extends Component {
       player: 1,
       boards: boards,
       winner: 0,
+      shouldRotate: false,
     });
   }
 
@@ -55,12 +60,19 @@ class GameBoard extends Component {
             board={this.state.boards[i][j]}
             handleClick={(event, x, y) => {
               const tmpBoard = this.state.boards;
-              if (tmpBoard[i][j][x][y] === 0) {
-                tmpBoard[i][j][x][y] = this.state.player;
+              if (this.state.shouldRotate) {
+                tmpBoard[i][j] = rotateBoardClockwise(tmpBoard[i][j]);
                 this.setState((prevState) => ({
                   boards: tmpBoard,
                   player: prevState.player * -1,
+                  shouldRotate: false,
                   winner: Checker(prevState.boards),
+                }));
+              } else if (tmpBoard[i][j][x][y] === 0) {
+                tmpBoard[i][j][x][y] = this.state.player;
+                this.setState((prevState) => ({
+                  boards: tmpBoard,
+                  shouldRotate: true,
                 }));
               }
             }}
