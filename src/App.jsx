@@ -41,13 +41,17 @@ class App extends Component {
             <ButtonCounter
               text="+"
               counterOperation={() =>
-                this.setState({ boardSize: this.state.boardSize + 1 })
+                this.setState((prevState) => ({
+                  boardSize: prevState.boardSize + 1,
+                }))
               }
             />
             <ButtonCounter
               text="-"
               counterOperation={() =>
-                this.setState({ boardSize: this.state.boardSize - 1 })
+                this.setState((prevState) => ({
+                  boardSize: prevState.boardSize - 1,
+                }))
               }
             />
           </div>

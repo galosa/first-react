@@ -57,11 +57,11 @@ class GameBoard extends Component {
               const tmpBoard = this.state.boards;
               if (tmpBoard[i][j][x][y] === 0) {
                 tmpBoard[i][j][x][y] = this.state.player;
-                this.setState({
+                this.setState((prevState) => ({
                   boards: tmpBoard,
-                  player: this.state.player * -1,
-                  winner: Checker(this.state.boards),
-                });
+                  player: prevState.player * -1,
+                  winner: Checker(prevState.boards),
+                }));
               }
             }}
           />
