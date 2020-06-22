@@ -3,13 +3,7 @@ import "./Board.css";
 
 const Board = (props) => {
   return (
-    <div
-      style={{
-        display: "inline-block",
-        width: `auto`,
-        border: "solid 1px black",
-      }}
-    >
+    <div className="board">
       {props.board.map((row, i) => (
         <div key={i}>
           {row.map((player, j) => {

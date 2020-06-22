@@ -1,3 +1,10 @@
+.board {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border: solid 1px black;
+}
+
 .dot {
   height: 25px;
   width: 25px;
@@ -14,4 +21,24 @@
 
 .blue-dot {
   background-color: rgb(0, 0, 255);
+}
+
+.rotateRight {
+  width: 30px;
+  height: 30px;
+  margin-top: 33%;
+  margin-left: 3%;
+  transform: rotatez(90deg);
+  border-radius: 45%;
+  margin: 0 auto;
+}
+
+.rotateLeft {
+  width: 30px;
+  height: 30px;
+  margin-top: 33%;
+  margin-left: 3%;
+  transform: rotateY(180deg) rotateZ(90deg);
+  border-radius: 45%;
+  translate: (50%, 50%);
 }

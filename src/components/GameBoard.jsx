@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Board from "./Board";
 import "./GameBoard.css";
+import "./BoardContainer.css";
 import Checker from "../logic/Checker";
 import "./Board.css";
 import {
   rotateBoardClockwise,
   rotateBoardAntiClockwise,
 } from "../logic/Rotate";
+import rotateImg from "../assets/rotate.png";
 
 class GameBoard extends Component {
   constructor(props) {
@@ -18,7 +20,9 @@ class GameBoard extends Component {
       player: 1,
       boards: boards,
       winner: 0,
+      shouldRotate: false,
     };
+    this.overlay = this.overlay.bind(this);
   }
 
   generateBoards(size) {
@@ -48,41 +52,82 @@ class GameBoard extends Component {
     });
   }
 
+  overlay(boardRow, boardCol) {
+    return this.state.shouldRotate ? (
+      <div
+        className="rotateOverlay"
+        key={`rotateboard ${boardRow},${boardCol}`}
+      >
+        <img
+          className="rotateLeft"
+          src={rotateImg}
+          onClick={() => {
+            const tmpBoards = this.state.boards;
+            tmpBoards[boardRow][boardCol] = rotateBoardAntiClockwise(
+              tmpBoards[boardRow][boardCol]
+            );
+            this.setState((prevState) => ({
+              boards: tmpBoards,
+              player: prevState.player * -1,
+              shouldRotate: false,
+              winner: Checker(tmpBoards),
+            }));
+          }}
+        ></img>
+        <img
+          className="rotateRight"
+          src={rotateImg}
+          onClick={() => {
+            const tmpBoards = this.state.boards;
+            tmpBoards[boardRow][boardCol] = rotateBoardClockwise(
+              tmpBoards[boardRow][boardCol]
+            );
+            this.setState((prevState) => ({
+              boards: tmpBoards,
+              player: prevState.player * -1,
+              shouldRotate: false,
+              winner: Checker(tmpBoards),
+            }));
+          }}
+        ></img>
+      </div>
+    ) : (
+      <div style={{ visibility: "hidden", zIndex: -10 }}></div>
+    );
+  }
+
   render() {
     const boardsComponents = [];
     const boardsSize = this.state.boardsSize;
+
     for (let i = 0; i < boardsSize; i++) {
       for (let j = 0; j < boardsSize; j++) {
         boardsComponents.push(
-          <Board
-            key={`${i},${j}`}
-            boardSize={boardsSize}
-            board={this.state.boards[i][j]}
-            handleClick={(event, x, y) => {
-              const tmpBoard = this.state.boards;
-              if (this.state.shouldRotate) {
-                tmpBoard[i][j] = rotateBoardClockwise(tmpBoard[i][j]);
-                this.setState((prevState) => ({
-                  boards: tmpBoard,
-                  player: prevState.player * -1,
-                  shouldRotate: false,
-                  winner: Checker(prevState.boards),
-                }));
-              } else if (tmpBoard[i][j][x][y] === 0) {
-                tmpBoard[i][j][x][y] = this.state.player;
-                this.setState((prevState) => ({
-                  boards: tmpBoard,
-                  shouldRotate: true,
-                }));
-              }
-            }}
-          />
+          <div className="boardContainer">
+            <Board
+              key={`${i},${j}`}
+              boardSize={boardsSize}
+              board={this.state.boards[i][j]}
+              handleClick={(event, x, y) => {
+                const tmpBoard = this.state.boards;
+                if (tmpBoard[i][j][x][y] === 0) {
+                  tmpBoard[i][j][x][y] = this.state.player;
+                  this.setState((prevState) => ({
+                    boards: tmpBoard,
+                    shouldRotate: true,
+                  }));
+                }
+              }}
+            />
+            {this.overlay(i, j)}
+          </div>
         );
       }
     }
-    return this.state.winner === 0 ? (
+
+    const gameBoard = (
       <div
-        className="board"
+        className="gameBoard"
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${this.props.boardSize}, ${3 * 29}px)`,
@@ -92,7 +137,9 @@ class GameBoard extends Component {
       >
         {boardsComponents}
       </div>
-    ) : (
+    );
+
+    const winnerAnnouncement = (
       <div>
         <div>
           <h3>The winner is:</h3>
@@ -108,6 +155,8 @@ class GameBoard extends Component {
         ></div>
       </div>
     );
+
+    return this.state.winner === 0 ? gameBoard : winnerAnnouncement;
   }
 }
 
