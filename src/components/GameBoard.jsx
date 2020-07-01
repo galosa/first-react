@@ -60,6 +60,7 @@ class GameBoard extends Component {
       >
         <img
           className="rotateLeft"
+          alt="left"
           src={rotateImg}
           onClick={() => {
             const tmpBoards = this.state.boards;
@@ -76,6 +77,7 @@ class GameBoard extends Component {
         ></img>
         <img
           className="rotateRight"
+          alt="right"
           src={rotateImg}
           onClick={() => {
             const tmpBoards = this.state.boards;
