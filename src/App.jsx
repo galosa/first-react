@@ -29,7 +29,11 @@ class App extends Component {
           />
           <h2>Welcome to Reactor</h2>
           <Button
-            deRotate={() => this.setState({ clockwise: !this.state.clockwise })}
+            deRotate={() =>
+              this.setState((prevState) => ({
+                clockwise: !prevState.clockwise,
+              }))
+            }
           ></Button>
         </div>
         <p className="App-intro">
